@@ -1,5 +1,8 @@
 <template>
 	<view>
+		<!-- 使用自定义组件 -->
+		<!-- 不能在serach自定义事件上绑定事件，必须在内部 -->
+		<my-search @click='gotoSearch'></my-search>
 		<view class="scroll-view-container">
 			<!-- 左侧滑动区 -->
 			<scroll-view class='left-scroll-view' scroll-y :style="{height: wh + 'px'}" :scroll-top="scrollTop">
@@ -40,7 +43,8 @@
 		},
 		onLoad() {
 			let sysInfo = uni.getSystemInfoSync()
-			this.wh = sysInfo.windowHeight
+			// 由于搜索框占据了剩余高度的50 所以需要减去
+			this.wh = sysInfo.windowHeight -50
 			this.getCateList()
 		},
 		methods: {
@@ -62,6 +66,11 @@
 			gotoGoodsList(item3){
 				uni.navigateTo({
 					url: '/subpkg/goods_list/goods_list?cid=' + item3.cat_id
+				})
+			},
+			gotoSearch() {
+				uni.navigateTo({
+					url: '/subpkg/search/search'
 				})
 			}
 		}
